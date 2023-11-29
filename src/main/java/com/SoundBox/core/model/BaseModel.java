@@ -1,7 +1,7 @@
 package com.SoundBox.core.model;
 
 import java.io.Serializable;
-import java.security.Timestamp;
+import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -15,7 +15,29 @@ public abstract class BaseModel<ID extends Serializable> implements Serializable
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	@Column(name = "id", unique=true, updatable = false, nullable = false)
-	protected ID id;
+	protected ID id;	
+	
+	@Column(name="created_at", updatable = false)
+	public Date createdAt;
+	
+	@Column(name="update_at")
+	public Date updateAt;
+	
+	public Date getCreatedAt() {
+		return createdAt;
+	}
+
+	public void setCreatedAt(Date createdAt) {
+		this.createdAt = createdAt;
+	}
+	
+	public Date getUpdateAt() {
+		return updateAt;
+	}
+	
+	public void setUpdateAt(Date updateAt) {
+		this.updateAt = updateAt;
+	}
 	
 	public ID getId() {
 		return id;
@@ -24,29 +46,7 @@ public abstract class BaseModel<ID extends Serializable> implements Serializable
 	public void setId(ID id) {
 		this.id = id;
 	}
-	
-	@Column(name="created_at")
-	protected Timestamp createdAt;
-	
-	public Timestamp getCreatedAt() {
-		return createdAt;
-	}
 
-	public void setCreatedAt(Timestamp createdAt) {
-		this.createdAt = createdAt;
-	}
-	
-	@Column(name="update_at")
-	protected Timestamp updateAt;
-	
-	public Timestamp getUpdateAt() {
-		return updateAt;
-	}
-
-	public void seUpdateAt(Timestamp updateAt) {
-		this.updateAt = updateAt;
-	}
-	
 	@Override
 	public boolean equals(Object obj) {
 		BaseModel<?> anotherObj = (BaseModel<?>) obj;
@@ -58,4 +58,5 @@ public abstract class BaseModel<ID extends Serializable> implements Serializable
 		
 		return true;
 	}
+	
 }
