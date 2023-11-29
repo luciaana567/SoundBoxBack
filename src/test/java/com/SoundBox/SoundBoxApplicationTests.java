@@ -1,4 +1,4 @@
-package com.example.SoundBox;
+package com.SoundBox;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
