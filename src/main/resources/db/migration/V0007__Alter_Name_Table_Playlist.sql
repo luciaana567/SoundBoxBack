@@ -1,0 +1,1 @@
+ALTER TABLE playList RENAME playlist;

@@ -14,13 +14,13 @@ import javax.persistence.MappedSuperclass;
 public abstract class BaseModel<ID extends Serializable> implements Serializable {
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name = "id", unique=true, updatable = false, nullable = false)
+	@Column(name = "id")
 	protected ID id;	
 	
 	@Column(name="created_at", updatable = false)
 	public Date createdAt;
 	
-	@Column(name="update_at")
+	@Column(name="updated_at")
 	public Date updateAt;
 	
 	public Date getCreatedAt() {

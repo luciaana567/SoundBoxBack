@@ -1,4 +1,4 @@
-CREATE TABLE IF NOT EXISTS db_sound_box.Countries (
+CREATE TABLE IF NOT EXISTS db_sound_box.countries (
 	  id int NOT NULL AUTO_INCREMENT,
 	  name varchar(255) NOT NULL,
 	  slg varchar(10),
@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS db_sound_box.Countries (
 	  UNIQUE(id, name)
 	);
 	
-	CREATE TABLE IF NOT EXISTS db_sound_box.Person (
+	CREATE TABLE IF NOT EXISTS db_sound_box.person (
 	  id int NOT NULL AUTO_INCREMENT,
 	  name varchar(255) NOT NULL,
 	  birthday date NOT NULL,
@@ -18,11 +18,11 @@ CREATE TABLE IF NOT EXISTS db_sound_box.Countries (
 	  created_at timestamp DEFAULT (now()),
 	  updated_at timestamp,
 	  PRIMARY KEY(id),
-	  FOREIGN KEY (country_id) REFERENCES Countries(id),
+	  FOREIGN KEY (country_id) REFERENCES countries(id),
 	  UNIQUE(id)
 	);
 	
-	CREATE TABLE IF NOT EXISTS User (
+	CREATE TABLE IF NOT EXISTS user (
 	  id int NOT NULL AUTO_INCREMENT,
 	  username varchar(255) UNIQUE NOT NULL,
 	  email varchar(255) UNIQUE NOT NULL,
@@ -31,22 +31,22 @@ CREATE TABLE IF NOT EXISTS db_sound_box.Countries (
 	  created_at timestamp DEFAULT (now()),
 	  updated_at timestamp,
 	  PRIMARY KEY(id),  
-	  FOREIGN KEY (person_id) REFERENCES Person(id),
+	  FOREIGN KEY (person_id) REFERENCES person(id),
 	  UNIQUE(id, username, email)
 	);
 	
-	CREATE TABLE IF NOT EXISTS PlayList (
+	CREATE TABLE IF NOT EXISTS playList (
 	  id int NOT NULL AUTO_INCREMENT,
 	  name varchar(255),
 	  user_id int,
 	  created_at timestamp DEFAULT (now()),
 	  updated_at timestamp,
 	  PRIMARY KEY(id),
-	  FOREIGN KEY (user_id) REFERENCES User(id),
+	  FOREIGN KEY (user_id) REFERENCES user(id),
 	  UNIQUE(id)
 	);	
 
-  CREATE TABLE IF NOT EXISTS Style (
+  CREATE TABLE IF NOT EXISTS style (
 	  id int NOT NULL AUTO_INCREMENT,
 	  name varchar(100),
 	  created_at timestamp DEFAULT (now()),
@@ -55,7 +55,7 @@ CREATE TABLE IF NOT EXISTS db_sound_box.Countries (
 	  UNIQUE(id)
 	);
 
-	CREATE TABLE IF NOT EXISTS Music (
+	CREATE TABLE IF NOT EXISTS music (
 	  id int NOT NULL AUTO_INCREMENT,
 	  name varchar(255), 
 	  artist_name varchar(100), 
@@ -73,26 +73,26 @@ CREATE TABLE IF NOT EXISTS db_sound_box.Countries (
 	  UNIQUE(id)
 	);
 
-	CREATE TABLE IF NOT EXISTS Music_Playlist (
+	CREATE TABLE IF NOT EXISTS music_playlist (
 	  id int NOT NULL AUTO_INCREMENT,
 	  music_id int NOT NULL,
 	  playlist_id int NOT NULL,
 	  created_at timestamp DEFAULT (now()),
 	  updated_at timestamp,
 	  PRIMARY KEY(id),
-	  FOREIGN KEY (playlist_id) REFERENCES PlayList(id),
-	  FOREIGN KEY (music_id) REFERENCES Music(id),
+	  FOREIGN KEY (playlist_id) REFERENCES playList(id),
+	  FOREIGN KEY (music_id) REFERENCES music(id),
 	  UNIQUE(id)
 	);
 	
-	CREATE TABLE IF NOT EXISTS Musical_Style (
+	CREATE TABLE IF NOT EXISTS musical_style (
 	  id int NOT NULL AUTO_INCREMENT,
 	  music_id int NOT NULL,
 	  style_id int NOT NULL,
 	  created_at timestamp DEFAULT (now()),
 	  updated_at timestamp,
 	  PRIMARY KEY(id),
-	  FOREIGN KEY (music_id) REFERENCES Music(id),
-	  FOREIGN KEY (style_id) REFERENCES Style(id),
+	  FOREIGN KEY (music_id) REFERENCES music(id),
+	  FOREIGN KEY (style_id) REFERENCES style(id),
 	  UNIQUE(id)
 	);

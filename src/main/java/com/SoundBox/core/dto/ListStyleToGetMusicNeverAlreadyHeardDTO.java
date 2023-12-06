@@ -11,4 +11,5 @@ import lombok.*;
 @NoArgsConstructor
 public class ListStyleToGetMusicNeverAlreadyHeardDTO {
 	private List<Integer> stylesId;
+	private Integer userId;
 }

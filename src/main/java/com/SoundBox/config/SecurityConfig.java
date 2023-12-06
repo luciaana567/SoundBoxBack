@@ -81,14 +81,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	CorsConfiguration corsConfiguration() {
 		CorsConfiguration config = new CorsConfiguration();
-		config.setAllowCredentials(true);
 		config.addAllowedOrigin("*");
-		config.addAllowedHeader("*");
 		config.addAllowedMethod("OPTIONS");
 		config.addAllowedMethod("GET");
 		config.addAllowedMethod("POST");
 		config.addAllowedMethod("PUT");
 		config.addAllowedMethod("DELETE");
+		config.addAllowedHeader("*");
+		config.setAllowCredentials(false);
 		return config;
 	}
 

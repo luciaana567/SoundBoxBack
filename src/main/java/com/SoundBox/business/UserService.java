@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.SoundBox.core.dto.*;
+import com.SoundBox.core.model.Person;
 import com.SoundBox.core.model.User;
 import com.SoundBox.core.repository.UserRepository;
 import com.SoundBox.utils.EmailValid;
@@ -21,8 +22,7 @@ public class UserService extends AbstractService<User, UserDTO, Integer>{
 	
 	@Autowired
 	private PersonService personService; 
-	
-	
+
 	@Override
 	public JpaRepository<User, Integer> buscarRepositorio() {
 		return this.userRepository;
@@ -59,7 +59,7 @@ public class UserService extends AbstractService<User, UserDTO, Integer>{
 	}
 	
  	public UserDTO saveUser(UserDTO dto) throws Exception {
-		
+		 		
 		if(!EmailValid.isValidEmailAddressRegex(dto.getEmail())) {
 			throw new Exception("Email inválido!");
 		}
@@ -68,30 +68,38 @@ public class UserService extends AbstractService<User, UserDTO, Integer>{
 		}
 		if(VerifyExistsLogin(dto)) {
 			throw new Exception("Login já esta sendo usado!");
-		}			
+		}		
 		
 		User user = toEntity(dto);		
 		user.setCreatedAt(new Date());	
 		user.setUpdateAt(new Date());
-		User userSaved =  this.userRepository.save(user);
+		User userSaved =  this.userRepository.save(user);		
 		return toDTO(userSaved);
 	}
 	
+ 	
 	public UserDTO updateUser(UserDTO dto) throws Exception {
-		
+
+ 		User entity = this.EntitieFindById(dto.getId());
+ 		
 		if(!EmailValid.isValidEmailAddressRegex(dto.getEmail())) {
 			throw new Exception("Email inválido!");
 		}
-		if(VerifyExistsEmail(dto)) {
+		if(VerifyExistsEmail(dto) && !dto.getEmail().equals(entity.getEmail())) {
 			throw new Exception("Email já cadastrado!");
 		}
-		if(VerifyExistsLogin(dto)) {
+		if(VerifyExistsLogin(dto) && !dto.getUsername().equals(entity.getUsername())) {
 			throw new Exception("Login já esta sendo usado!");
-		}					
+		}	
+		
 		User user = toEntity(dto);
 		user.setUpdateAt(new Date());
+		user.getPerson().setUpdateAt(new Date());
 		User userSaved =  this.userRepository.save(user);
-		return toDTO(userSaved);
+		PersonDTO person = this.personService.save(dto.getPerson());
+		UserDTO result = toDTO(userSaved);
+		result.setPerson(person);
+		return result;
 	}
 
 

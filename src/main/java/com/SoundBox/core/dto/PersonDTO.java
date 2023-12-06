@@ -18,6 +18,6 @@ public class PersonDTO {
 	private Integer id;
 	private String name;
 	private GenderEnum gender;
-	private CountryDTO country;
+	private Integer country;
 	private Date birthday;	
 }

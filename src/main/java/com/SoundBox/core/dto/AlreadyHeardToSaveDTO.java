@@ -6,10 +6,8 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class MusicPlaylistToSaveDTO {
+public class AlreadyHeardToSaveDTO {
 	private Integer id;
 	private Integer musicId;
-	private Integer playListId;	
 	private Integer userId;	
-	
 }

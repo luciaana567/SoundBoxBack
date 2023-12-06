@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 
 import com.SoundBox.core.dto.PlaylistDTO;
+import com.SoundBox.core.dto.UserDTO;
 import com.SoundBox.core.model.Playlist;
 import com.SoundBox.core.repository.PlaylistRepository;
 
@@ -40,4 +41,17 @@ public class PlaylistService extends AbstractService<Playlist, PlaylistDTO, Inte
 		return entity;
 	}
 
+	public void createPlaylist(UserDTO user) {
+		PlaylistDTO playlistDTO = new PlaylistDTO();
+		
+		playlistDTO.setName("Biblioteca do(a)"+ user.getPerson().getName());
+		playlistDTO.setUser(user);
+		Playlist entity = this.toEntity(playlistDTO);
+		this.playlistRepository.save(entity);
+	}
+	
+	public PlaylistDTO findByUserId(Integer iduser) {
+		Playlist entity = playlistRepository.findByUserId(iduser);
+		return toDTO(entity);
+	}
 }

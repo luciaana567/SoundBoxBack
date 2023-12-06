@@ -8,12 +8,12 @@ import javax.persistence.*;
 import com.SoundBox.core.enums.GenderEnum;
 import lombok.*;
 
-@Entity
+@Entity(name = "person")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-@Table(name = "Person", schema = "db_sound_box")
+@Table(name = "person", schema = "db_sound_box")
 public class Person extends BaseModel<Integer> implements Serializable{
 
 	/**
@@ -30,9 +30,8 @@ public class Person extends BaseModel<Integer> implements Serializable{
     @Column(name = "gender")
     @Enumerated(EnumType.STRING)
     private GenderEnum gender;
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "country_id")
-    private Country country;
+    
+    @Column(name = "country_id")
+    private Integer country;
 
 }

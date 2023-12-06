@@ -12,12 +12,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
+@Entity(name = "style")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-@Table(name = "Style", schema = "db_sound_box")
+@Table(name = "style", schema = "db_sound_box")
 public class Style extends BaseModel<Integer> implements Serializable{
 	/**
 	 * 

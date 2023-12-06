@@ -18,12 +18,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
+@Entity(name = "user")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-@Table(name = "User", schema = "db_sound_box")
+@Table(name = "user", schema = "db_sound_box")
 public class User extends BaseModel<Integer> implements UserDetails{
 
 	/**
@@ -31,10 +31,8 @@ public class User extends BaseModel<Integer> implements UserDetails{
 	 */
 	private static final long serialVersionUID = -5210438896923055050L;
 	
-	@Column(unique=true)
     private String username;
 
-	@Column(unique=true)
     private String email;
 
 	@Column

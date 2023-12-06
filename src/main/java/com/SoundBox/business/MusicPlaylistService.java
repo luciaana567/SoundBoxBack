@@ -46,15 +46,15 @@ public class MusicPlaylistService extends AbstractService<MusicPlaylist, MusicPl
 	
 	public MusicPlaylistDTO saveNewMusic(MusicPlaylistToSaveDTO dto) {		
 		MusicPlaylistDTO dtoToSave = new MusicPlaylistDTO();
-		dtoToSave.setMusic(musicService.getById(dto.getMusicId()));
-		dtoToSave.setPlayList(playlistService.findById(dto.getPlayListId()));
+		dtoToSave.setMusic(musicService.findById(dto.getMusicId()));
+		dtoToSave.setPlayList(playlistService.findByUserId(dto.getUserId()));
 		
 		this.musicPlaylistRepository.save(this.toEntity(dtoToSave));		
 		return dtoToSave;
 	}
 	
 	public void deleteByIdMusicAndIdPlaylist(MusicPlaylistToSaveDTO dto) {
-		this.musicPlaylistRepository.removeByMusicIdAndPlaylistId(dto.getMusicId(), dto.getPlayListId());
+		this.musicPlaylistRepository.removeByMusicIdAndUserId(dto.getMusicId(), dto.getUserId());
 	}
 
 }

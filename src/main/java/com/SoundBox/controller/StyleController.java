@@ -9,20 +9,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.SoundBox.business.CountryService;
-import com.SoundBox.core.dto.CountryDTO;
+import com.SoundBox.business.StyleService;
+import com.SoundBox.core.dto.StyleDTO;
 
 @RestController
-@RequestMapping("/api/country")
-public class CountryController  {
+@RequestMapping("/api/style")
+public class StyleController  {
 
 	@Autowired
-	private CountryService countryService;
-
-
-	@GetMapping("/get")
-	public ResponseEntity<List<CountryDTO>> getAllCountries() {
-		List<CountryDTO> list = this.countryService.findAll();
-		return new ResponseEntity<List<CountryDTO>>(list,  HttpStatus.OK);
+	private StyleService styleService;
+	
+	@GetMapping(path ="/get")
+	public ResponseEntity<List<StyleDTO>>  buscar() {
+		List<StyleDTO> list = this.styleService.findAll();
+		return new ResponseEntity<List<StyleDTO>>(list,  HttpStatus.OK);
 	}
+	
 }

@@ -13,12 +13,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
+@Entity(name = "Music_Playlist")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-@Table(name = "Music_Playlist", schema = "db_sound_box")
+@Table(name = "music_playlist", schema = "db_sound_box")
 public class MusicPlaylist extends BaseModel<Integer> implements Serializable{ 
 	/**
 	 * 

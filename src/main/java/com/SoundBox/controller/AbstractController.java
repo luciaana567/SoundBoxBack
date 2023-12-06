@@ -31,7 +31,7 @@ public abstract class AbstractController<Entity extends BaseModel<Integer>, DTO,
 		return new ResponseEntity<DTO>(dto,  HttpStatus.OK);
 	}
 	
-	@PostMapping("/alvar")
+	@PostMapping("/salvar")
 	public ResponseEntity<DTO> salvar(@RequestBody DTO dto) {		
 		DTO dtoSaved = service().save(dto);
 		return new ResponseEntity<DTO>(dtoSaved, HttpStatus.CREATED);		

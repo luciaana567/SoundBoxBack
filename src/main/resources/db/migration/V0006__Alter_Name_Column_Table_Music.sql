@@ -1,0 +1,1 @@
+ALTER TABLE music RENAME COLUMN id_already_heard TO already_heard; 

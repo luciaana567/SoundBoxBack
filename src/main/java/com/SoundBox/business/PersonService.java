@@ -15,9 +15,6 @@ public class PersonService extends AbstractService<Person, PersonDTO, Integer>{
 	@Autowired
 	private PersonRepository personRepository;
 	
-	@Autowired
-	private CountryService countryService;
-	
 	@Override
 	public JpaRepository<Person, Integer> buscarRepositorio() {
 		return personRepository;
@@ -30,7 +27,7 @@ public class PersonService extends AbstractService<Person, PersonDTO, Integer>{
 		dto.setName(entity.getName());
 		dto.setBirthday(entity.getBirthday());
 		dto.setGender(entity.getGender());
-		dto.setCountry(countryService.toDTO(entity.getCountry()));
+		dto.setCountry(entity.getCountry());
 		return dto;
 	}
 
@@ -41,7 +38,7 @@ public class PersonService extends AbstractService<Person, PersonDTO, Integer>{
 		entity.setName(dto.getName());
 		entity.setBirthday(dto.getBirthday());
 		entity.setGender(dto.getGender());
-		entity.setCountry(countryService.toEntity(dto.getCountry()));
+		entity.setCountry(dto.getCountry());
 		return entity;
 	}
 

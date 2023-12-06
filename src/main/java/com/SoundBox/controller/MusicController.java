@@ -18,9 +18,9 @@ public class MusicController  {
 	@Autowired
 	private MusicService musicService;
 	
-	@GetMapping("/get/{id}")
-	public ResponseEntity<MusicDTO>  buscar(@PathVariable Integer id) {
-		MusicDTO dto = this.musicService.findById(id);
+	@GetMapping(path ="/get/{id}/user/{userId}")
+	public ResponseEntity<MusicDTO>  buscar(@PathVariable Integer id, @PathVariable Integer userId) {
+		MusicDTO dto = this.musicService.getById(id, userId);
 		return new ResponseEntity<MusicDTO>(dto,  HttpStatus.OK);
 	}
 	

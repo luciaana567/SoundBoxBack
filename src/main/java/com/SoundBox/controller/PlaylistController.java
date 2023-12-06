@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -28,7 +29,7 @@ import com.SoundBox.core.model.MusicPlaylist;
 
 @RestController
 @RequestMapping("/api/playlist")
-public class PlaylistController extends AbstractController<MusicPlaylist, MusicPlaylistDTO, Integer> {
+public class PlaylistController  {
 
 	@Autowired
 	private MusicPlaylistService musicPlaylistService;
@@ -39,12 +40,9 @@ public class PlaylistController extends AbstractController<MusicPlaylist, MusicP
 	@Autowired
 	private MusicService musicService;
 
-	@Override
-	public AbstractService<MusicPlaylist, MusicPlaylistDTO, Integer> service() {
-		return musicPlaylistService;
-	}
-	
-	@PostMapping("/save")
+
+	@Transactional
+	@PostMapping("/add/music")
 	public ResponseEntity<?> salve(@RequestBody MusicPlaylistToSaveDTO playlist) throws Exception {	
 		try {
 			this.musicPlaylistService.saveNewMusic(playlist);
@@ -55,6 +53,7 @@ public class PlaylistController extends AbstractController<MusicPlaylist, MusicP
 		return new ResponseEntity<UserDTO>(HttpStatus.CREATED);		
 	}	
 	
+	@Transactional
 	@PutMapping("/update/name")
 	public ResponseEntity<?> updateName(@RequestBody PlaylistDTO playlist) throws Exception {	
 		try {
@@ -66,42 +65,48 @@ public class PlaylistController extends AbstractController<MusicPlaylist, MusicP
 		return new ResponseEntity<UserDTO>(HttpStatus.CREATED);		
 	}	
 	
-	@DeleteMapping("/delete")
+	@Transactional
+	@PostMapping("/delete")
 	public ResponseEntity<?> delete(@RequestBody MusicPlaylistToSaveDTO playlist) {		
 		this.musicPlaylistService.deleteByIdMusicAndIdPlaylist(playlist);
-		return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);	
+		return new ResponseEntity<>(null, HttpStatus.OK);	
 	}
 	
 	// pegar listagens 
 	
-	@GetMapping("/get/music")
+	@Transactional
+	@GetMapping("/get/user/{id}")
 	public ResponseEntity<List<MusicDTO>> getMusic(@PathVariable Integer id) {
 		// mudar para pegar de acordo com id do usuário e trazer tbm a playlist
-		List<MusicDTO> list = this.musicService.findByIdPlaylist(id);
-		return new ResponseEntity<List<MusicDTO>>(list,  HttpStatus.OK);
-	}
-		
-	@GetMapping("/get/MusicNeverAlreadyHeard")
-	public ResponseEntity<List<MusicDTO>> GetMusicNeverAlreadyHeardByStyle(@RequestBody ListStyleToGetMusicNeverAlreadyHeardDTO list) {		
-		List<MusicDTO> listMusic = this.musicService.findNeverHeardSongsByStyle(list.getStylesId());
-		return new ResponseEntity<List<MusicDTO>>(listMusic,  HttpStatus.OK);
-	}
-	
-	@GetMapping("/find/music")
-	public ResponseEntity<List<MusicDTO>> findMusicByName(@PathVariable String name) {
-		List<MusicDTO> list = this.musicService.findMusicByName(name);
+		List<MusicDTO> list = this.musicService.findPlaylistByIdUser(id);
 		return new ResponseEntity<List<MusicDTO>>(list,  HttpStatus.OK);
 	}
 	
-	@GetMapping("/get/MusicAlreadyHeardRadom")
-	public ResponseEntity<List<MusicDTO>> GetMusicAlreadyHeardRadom(@RequestBody ListStyleToGetMusicNeverAlreadyHeardDTO list) {		
-		List<MusicDTO> listMusic = this.musicService.findRadomAlreadyHeardPlaylist();
+	@Transactional
+	@PostMapping("/get/MusicNeverAlreadyHeard")
+	public ResponseEntity<List<MusicDTO>> GetMusicNeverAlreadyHeardByStyle(@RequestBody ListStyleToGetMusicNeverAlreadyHeardDTO dto) {		
+		List<MusicDTO> listMusic = this.musicService.findNeverHeardSongsByStyle(dto.getStylesId(), dto.getUserId());
 		return new ResponseEntity<List<MusicDTO>>(listMusic,  HttpStatus.OK);
 	}
 	
-	@GetMapping("/get/MusicRadom")
-	public ResponseEntity<List<MusicDTO>> GetMusicRadom(@RequestBody ListStyleToGetMusicNeverAlreadyHeardDTO list) {		
-		List<MusicDTO> listMusic = this.musicService.findRadomPlaylist();
+	@Transactional
+	@GetMapping("/find/music/{name}/user/{id}")
+	public ResponseEntity<List<MusicDTO>> findMusicByName(@PathVariable String name, @PathVariable Integer id) {
+		List<MusicDTO> list = this.musicService.findMusicByName(name, id);
+		return new ResponseEntity<List<MusicDTO>>(list,  HttpStatus.OK);
+	}
+	
+	@Transactional
+	@GetMapping("/get/MusicAlreadyHeardRadom/user/{id}")
+	public ResponseEntity<List<MusicDTO>> GetMusicAlreadyHeardRadom(@PathVariable Integer id) {		
+		List<MusicDTO> listMusic = this.musicService.findRadomAlreadyHeardPlaylist(id);
+		return new ResponseEntity<List<MusicDTO>>(listMusic,  HttpStatus.OK);
+	}
+	
+	@Transactional
+	@GetMapping("/get/MusicRadom/user/{id}")
+	public ResponseEntity<List<MusicDTO>> GetMusicRadom(@PathVariable Integer id) {		
+		List<MusicDTO> listMusic = this.musicService.findRadomPlaylist(id);
 		return new ResponseEntity<List<MusicDTO>>(listMusic,  HttpStatus.OK);
 	}
 }

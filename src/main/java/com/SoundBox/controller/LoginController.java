@@ -28,12 +28,12 @@ public class LoginController{
 			
 		UserDTO user = this.userService.findById(userUpdatePasswordDTO.getId());
 		
-		if(utilSecutity.match(user.getPassword(), userUpdatePasswordDTO.getPassword())) {
+		if(utilSecutity.match(userUpdatePasswordDTO.getPassword(), user.getPassword())) {
 			user.setPassword(utilSecutity.enconde(userUpdatePasswordDTO.getNewPassword()));
 			this.userService.update(user);
 			return ResponseEntity.status(HttpStatus.OK).body("SUCESS");
 		}			
-		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 	}
 	
 }

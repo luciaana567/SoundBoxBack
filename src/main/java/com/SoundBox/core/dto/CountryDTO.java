@@ -1,6 +1,9 @@
 package com.SoundBox.core.dto;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 
 @Getter
@@ -8,7 +11,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CountryDTO {
-	private int id;
+	private Integer id;
 	private String name;
 	private String slg;	
 }

@@ -11,12 +11,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Entity
+@Entity(name = "music")
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
 @Setter
-@Table(name = "Music", schema = "db_sound_box")
+@Table(name = "music", schema = "db_sound_box")
 public class Music extends BaseModel<Integer> implements Serializable{
 	
     /**
@@ -48,7 +48,7 @@ public class Music extends BaseModel<Integer> implements Serializable{
 	@Column(name = "id_track")
     private String idTrack;
  
-	@Column(name="music_already_heard")
+	@Column(name="already_heard")
 	private Boolean musicAlreadyHeard;
 
 }

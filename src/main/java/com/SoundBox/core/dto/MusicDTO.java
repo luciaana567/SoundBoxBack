@@ -17,4 +17,5 @@ public class MusicDTO {
 	private String idImgMusic;
     private String idTrack;
 	private Boolean musicAlreadyHeard;
+	private Boolean inPlaylist;
 }
